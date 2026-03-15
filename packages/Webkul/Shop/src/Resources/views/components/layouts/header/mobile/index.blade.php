@@ -8,7 +8,7 @@
     $showWishlist = (bool) core()->getConfigData('customer.settings.wishlist.wishlist_option');
 @endphp
 
-<div class="flex flex-wrap gap-4 px-4 pt-6 pb-4 shadow-sm lg:hidden">
+<div class="flex flex-wrap gap-4 border-b border-[#F6B21A]/50 bg-gradient-to-r from-[#0D2C87] to-[#0A1F61] px-4 pb-4 pt-6 text-white shadow-sm lg:hidden">
     <div class="flex items-center justify-between w-full">
         <!-- Left Navigation -->
         <div class="flex items-center gap-x-1.5">
@@ -27,7 +27,7 @@
                 aria-label="@lang('shop::app.components.layouts.header.mobile.bagisto')"
             >
                 <img
-                    src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
+                    src="{{ asset('logodjouf.webp') }}"
                     alt="{{ config('app.name') }}"
                     width="131"
                     height="29"
@@ -47,7 +47,7 @@
                         href="{{ route('shop.compare.index') }}"
                         aria-label="@lang('shop::app.components.layouts.header.mobile.compare')"
                     >
-                        <span class="text-2xl cursor-pointer icon-compare"></span>
+                        <span class="icon-compare cursor-pointer text-2xl text-white hover:text-[#F6B21A]"></span>
                     </a>
                 @endif
 
@@ -65,7 +65,7 @@
                 <div class="max-md:hidden">
                     <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
                         <x-slot:toggle>
-                            <span class="text-2xl cursor-pointer icon-users"></span>
+                            <span class="icon-users cursor-pointer text-2xl text-white hover:text-[#F6B21A]"></span>
                         </x-slot>
 
                         <!-- Guest Dropdown -->
@@ -182,7 +182,7 @@
                             href="{{ route('shop.customer.session.create') }}"
                             aria-label="@lang('shop::app.components.layouts.header.mobile.account')"
                         >
-                            <span class="text-2xl cursor-pointer icon-users"></span>
+                            <span class="icon-users cursor-pointer text-2xl text-white hover:text-[#F6B21A]"></span>
                         </a>
                     @endguest
 
@@ -192,7 +192,7 @@
                             href="{{ route('shop.customers.account.index') }}"
                             aria-label="@lang('shop::app.components.layouts.header.mobile.account')"
                         >
-                            <span class="text-2xl cursor-pointer icon-users"></span>
+                            <span class="icon-users cursor-pointer text-2xl text-white hover:text-[#F6B21A]"></span>
                         </a>
                     @endauth
                 </div>
@@ -216,7 +216,7 @@
 
             <input
                 type="text"
-                class="block w-full rounded-xl border border-['#E3E3E3'] px-11 py-3.5 text-sm font-medium text-gray-900 max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
+                class="block w-full rounded-xl border border-[#D4DDF8] bg-white px-11 py-3.5 text-sm font-medium text-[#0B225F] max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
                 name="query"
                 value="{{ request('query') }}"
                 placeholder="@lang('shop::app.components.layouts.header.mobile.search-text')"
@@ -240,14 +240,14 @@
             @close="onDrawerClose"
         >
             <x-slot:toggle>
-                <span class="text-2xl cursor-pointer icon-hamburger"></span>
+                <span class="icon-hamburger cursor-pointer text-2xl text-white hover:text-[#F6B21A]"></span>
             </x-slot>
 
             <x-slot:header>
                 <div class="flex items-center justify-between">
                     <a href="{{ route('shop.home.index') }}">
                         <img
-                            src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
+                            src="{{ asset('logodjouf.webp') }}"
                             alt="{{ config('app.name') }}"
                             width="131"
                             height="29"
