@@ -29,18 +29,20 @@
         <div class="grid gap-10 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
             <div>
                 <a href="{{ route('shop.home.index') }}" class="inline-flex items-center gap-3">
-                    <img
-                        src="{{ asset('logodjouf.webp') }}"
-                        alt="Djouf Inter"
-                        class="h-16 w-auto"
-                    >
+                    <span class="grid h-24 w-24 place-items-center rounded-full border-2 border-[#F6B21A] bg-white/10 p-2 shadow-lg shadow-black/20">
+                        <img
+                            src="{{ asset('logodjouf.webp') }}"
+                            alt="Djouf Inter"
+                            class="h-full w-full rounded-full object-contain"
+                        >
+                    </span>
                 </a>
 
-                <h3 class="mt-5 text-5xl font-semibold text-white max-md:text-3xl" style="font-family: 'DM Serif Display', serif;">
+                <h3 class="mt-5 text-4xl font-semibold text-white max-md:text-3xl" style="font-family: 'DM Serif Display', serif;">
                     Djouf Inter
                 </h3>
 
-                <p class="mt-5 max-w-[430px] text-[30px] leading-8 text-white/90 max-md:text-base">
+                <p class="mt-5 max-w-[430px] text-xl leading-8 text-white/90 max-md:text-base">
                     Votre boutique premium de boissons: whiskies, vins, champagnes, aperitifs et spiritueux. Qualite, authenticite et livraison rapide.
                 </p>
             </div>
