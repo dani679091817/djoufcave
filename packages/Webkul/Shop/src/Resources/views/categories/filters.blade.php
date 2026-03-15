@@ -547,19 +547,21 @@
 
             computed: {
                 minRange() {
-                    let priceRange = (this.priceRange || '0,100').split(',');
-                    return priceRange[0];
+                    const [minRange] = this.normalizePriceRange(this.priceRange);
+
+                    return minRange;
                 },
 
                 maxRange() {
-                    let priceRange = (this.priceRange || '0,100').split(',');
-                    return priceRange[1];
+                    const [, maxRange] = this.normalizePriceRange(this.priceRange);
+
+                    return maxRange;
                 }
             },
 
             created() {
                 // Initialize price range in created hook
-                this.priceRange = this.defaultPriceRange ?? [0, 100].join(',');
+                this.priceRange = this.normalizePriceRange(this.defaultPriceRange).join(',');
             },
 
             mounted() {
@@ -567,6 +569,34 @@
             },
 
             methods: {
+                normalizePriceRange(range) {
+                    if (typeof range === 'string') {
+                        const values = range.split(',').map(value => value?.toString().trim()).filter(Boolean);
+
+                        return [values[0] ?? '0', values[1] ?? '100'];
+                    }
+
+                    if (Array.isArray(range)) {
+                        return [
+                            (range[0] ?? 0).toString(),
+                            (range[1] ?? 100).toString(),
+                        ];
+                    }
+
+                    if (range && typeof range === 'object') {
+                        return [
+                            (range.minRange ?? range.min ?? 0).toString(),
+                            (range.maxRange ?? range.max ?? 100).toString(),
+                        ];
+                    }
+
+                    if (typeof range === 'number') {
+                        return ['0', range.toString()];
+                    }
+
+                    return ['0', '100'];
+                },
+
                 getMaxPrice() {
                     this.$axios.get('{{ route("shop.api.categories.max_price", $category->id ?? '') }}')
                         .then((response) => {
