@@ -8,7 +8,7 @@
     $showWishlist = (bool) core()->getConfigData('customer.settings.wishlist.wishlist_option');
 @endphp
 
-<div class="flex flex-wrap gap-4 bg-[#123C8D] px-4 pb-4 pt-6 text-white shadow-sm lg:hidden">
+<div class="flex flex-wrap gap-4 px-4 pb-4 pt-6 text-white shadow-sm lg:hidden" style="background:#123C8D; color:#ffffff;">
     <div class="flex items-center justify-between w-full">
         <!-- Left Navigation -->
         <div class="flex items-center gap-x-1.5">
@@ -28,7 +28,7 @@
             >
                 <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-white p-1 shadow-sm">
                     <img
-                        src="{{ bagisto_asset('images/logo.svg') }}"
+                        src="{{ asset('logodjouf.webp') }}"
                         alt="Djouf Inter"
                         class="h-full w-full rounded-full object-contain"
                     >
@@ -52,7 +52,7 @@
                         href="{{ route('shop.compare.index') }}"
                         aria-label="@lang('shop::app.components.layouts.header.mobile.compare')"
                     >
-                        <span class="text-2xl cursor-pointer icon-compare text-white"></span>
+                        <span class="icon-compare text-2xl cursor-pointer text-white"></span>
                     </a>
                 @endif
 
@@ -61,7 +61,9 @@
                 {!! view_render_event('bagisto.shop.components.layouts.header.mobile.mini_cart.before') !!}
 
                 @if(core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                    @include('shop::checkout.cart.mini-cart')
+                    <div class="[&_.icon-cart]:text-white [&_.icon-cart-filled]:text-white [&_.mini-cart-icon]:text-white [&_.mini-cart-button]:text-white">
+                        @include('shop::checkout.cart.mini-cart')
+                    </div>
                 @endif
 
                 {!! view_render_event('bagisto.shop.components.layouts.header.mobile.mini_cart.after') !!}
@@ -70,7 +72,7 @@
                 <div class="max-md:hidden">
                     <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
                         <x-slot:toggle>
-                            <span class="text-2xl cursor-pointer icon-users text-white"></span>
+                            <span class="icon-users text-2xl cursor-pointer text-white"></span>
                         </x-slot>
 
                         <!-- Guest Dropdown -->
@@ -187,7 +189,7 @@
                             href="{{ route('shop.customer.session.create') }}"
                             aria-label="@lang('shop::app.components.layouts.header.mobile.account')"
                         >
-                            <span class="text-2xl cursor-pointer icon-users text-white"></span>
+                            <span class="icon-users text-2xl cursor-pointer text-white"></span>
                         </a>
                     @endguest
 
@@ -254,7 +256,7 @@
                         <span class="flex items-center gap-2">
                             <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-white p-1 shadow-sm">
                                 <img
-                                    src="{{ bagisto_asset('images/logo.svg') }}"
+                                    src="{{ asset('logodjouf.webp') }}"
                                     alt="Djouf Inter"
                                     class="h-full w-full rounded-full object-contain"
                                 >

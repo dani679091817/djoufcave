@@ -29,8 +29,8 @@
                     aria-label="@lang('shop::app.checkout.cart.index.bagisto')"
                 >
                     <img
-                        src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                        alt="{{ config('app.name') }}"
+                        src="{{ asset('logodjouf.webp') }}"
+                        alt="Djouf Inter"
                         width="131"
                         height="29"
                     >

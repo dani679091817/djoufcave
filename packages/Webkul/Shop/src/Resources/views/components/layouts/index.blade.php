@@ -14,7 +14,7 @@
 
         {!! view_render_event('bagisto.shop.layout.head.before') !!}
 
-        <title>{{ $title ?? '' }}</title>
+        <title>{{ ! empty($title) ? $title . ' | Djouf Inter' : 'Djouf Inter' }}</title>
 
         <meta charset="UTF-8">
 
@@ -48,8 +48,8 @@
 
         <link
             rel="icon"
-            sizes="16x16"
-            href="{{ core()->getCurrentChannel()->favicon_url ?? bagisto_asset('images/favicon.ico') }}"
+            sizes="192x192"
+            href="{{ asset('logodjouf.webp') }}?v=2"
         />
 
         @bagistoVite(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])

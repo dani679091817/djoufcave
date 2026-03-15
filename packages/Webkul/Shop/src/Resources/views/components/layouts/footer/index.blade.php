@@ -1,166 +1,73 @@
 {!! view_render_event('bagisto.shop.layout.footer.before') !!}
 
-<!--
-    The category repository is injected directly here because there is no way
-    to retrieve it from the view composer, as this is an anonymous component.
--->
-@inject('themeCustomizationRepository', 'Webkul\Theme\Repositories\ThemeCustomizationRepository')
-
-<!--
-    This code needs to be refactored to reduce the amount of PHP in the Blade
-    template as much as possible.
--->
-@php
-    $channel = core()->getCurrentChannel();
-
-    $customization = $themeCustomizationRepository->findOneWhere([
-        'type'       => 'footer_links',
-        'status'     => 1,
-        'theme_code' => $channel->theme,
-        'channel_id' => $channel->id,
-    ]);
-@endphp
-
-<footer class="mt-9 bg-[#123C8D] text-white max-sm:mt-10">
-    <div class="flex justify-between gap-x-6 gap-y-8 p-[60px] max-1060:flex-col-reverse max-md:gap-5 max-md:p-8 max-sm:px-4 max-sm:py-5">
-        <div class="grid gap-4 max-w-[280px]">
+<footer class="mt-9 text-white max-sm:mt-10" style="background:#123C8D; color:#ffffff;">
+    <div class="mx-auto grid max-w-[1520px] gap-10 px-[60px] py-12 lg:grid-cols-[1.2fr_1fr_1fr_1fr] max-md:px-8 max-sm:px-4">
+        <div class="max-w-[340px]">
             <a href="{{ route('shop.home.index') }}" class="flex items-center gap-3">
-                <span class="flex h-14 w-14 items-center justify-center rounded-full border border-white/35 bg-white p-1.5 shadow-sm">
+                <span class="flex h-16 w-16 items-center justify-center rounded-full border border-white/35 bg-white p-1.5 shadow-sm">
                     <img
-                        src="{{ bagisto_asset('images/logo.svg') }}"
+                        src="{{ asset('logodjouf.webp') }}"
                         alt="Djouf Inter"
                         class="h-full w-full rounded-full object-contain"
                     >
                 </span>
 
-                <span class="text-xl font-semibold tracking-wide text-white">
-                    Djouf Inter
-                </span>
+                <span class="text-2xl font-semibold tracking-wide text-white">Djouf Inter</span>
             </a>
+
+            <p class="mt-5 text-sm leading-7 text-white/90">
+                Votre boutique premium de boissons: whiskies, vins, champagnes, aperitifs et spiritueux. Qualite, authenticite et livraison rapide.
+            </p>
         </div>
 
-        <!-- For Desktop View -->
-        <div
-            class="flex flex-wrap items-start gap-24 text-white max-1180:gap-6 max-1060:hidden"
-            v-pre
-        >
-            @if ($customization?->options)
-                @foreach ($customization->options as $footerLinkSection)
-                    <ul class="grid gap-5 text-sm text-white">
-                        @php
-                            usort($footerLinkSection, function ($a, $b) {
-                                return $a['sort_order'] - $b['sort_order'];
-                            });
-                        @endphp
+        <div>
+            <h4 class="text-base font-semibold uppercase tracking-[0.2em] text-white">Navigation</h4>
 
-                        @foreach ($footerLinkSection as $link)
-                            <li>
-                                <a href="{{ $link['url'] }}">
-                                    {{ $link['title'] }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endforeach
-            @endif
+            <ul class="mt-5 grid gap-3 text-sm text-white/90">
+                <li><a href="{{ route('shop.home.index') }}" class="hover:text-white">Accueil</a></li>
+                <li><a href="{{ route('shop.home.index') }}#featured-products" class="hover:text-white">Nos boissons</a></li>
+                <li><a href="{{ route('shop.checkout.cart.index') }}" class="hover:text-white">Panier</a></li>
+                <li><a href="{{ route('shop.customers.account.index') }}" class="hover:text-white">Mon compte</a></li>
+                <li><a href="{{ route('shop.home.index') }}#contact" class="hover:text-white">Contact</a></li>
+            </ul>
         </div>
 
-        <!-- For Mobile view -->
-        <x-shop::accordion
-            :is-active="false"
-            class="hidden !w-full rounded-xl !border-2 !border-white/20 max-1060:block max-sm:rounded-lg"
-        >
-            <x-slot:header class="rounded-t-lg bg-[#0F347D] font-medium text-white max-md:p-2.5 max-sm:px-3 max-sm:py-2 max-sm:text-sm">
-                @lang('shop::app.components.layouts.footer.footer-content')
-            </x-slot>
+        <div>
+            <h4 class="text-base font-semibold uppercase tracking-[0.2em] text-white">Rayons boissons</h4>
 
-            <x-slot:content class="flex justify-between !bg-[#123C8D] !p-4 text-white">
-                @if ($customization?->options)
-                    @foreach ($customization->options as $footerLinkSection)
-                        <ul
-                            class="grid gap-5 text-sm"
-                            v-pre
-                        >
-                            @php
-                                usort($footerLinkSection, function ($a, $b) {
-                                    return $a['sort_order'] - $b['sort_order'];
-                                });
-                            @endphp
+            <ul class="mt-5 grid gap-3 text-sm text-white/90">
+                <li><a href="{{ route('shop.search.index', ['query' => 'whisky']) }}" class="hover:text-white">Whiskies</a></li>
+                <li><a href="{{ route('shop.search.index', ['query' => 'vin']) }}" class="hover:text-white">Vins</a></li>
+                <li><a href="{{ route('shop.search.index', ['query' => 'champagne']) }}" class="hover:text-white">Champagnes</a></li>
+                <li><a href="{{ route('shop.search.index', ['query' => 'rhum']) }}" class="hover:text-white">Rhums</a></li>
+                <li><a href="{{ route('shop.search.index', ['query' => 'aperitif']) }}" class="hover:text-white">Aperitifs</a></li>
+            </ul>
+        </div>
 
-                            @foreach ($footerLinkSection as $link)
-                                <li>
-                                    <a
-                                        href="{{ $link['url'] }}"
-                                        class="text-sm font-medium text-white max-sm:text-xs"
-                                    >
-                                        {{ $link['title'] }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endforeach
-                @endif
-            </x-slot>
-        </x-shop::accordion>
+        <div id="contact">
+            <h4 class="text-base font-semibold uppercase tracking-[0.2em] text-white">Contact</h4>
 
-        {!! view_render_event('bagisto.shop.layout.footer.newsletter_subscription.before') !!}
-
-        <!-- News Letter subscription -->
-        @if (core()->getConfigData('customer.settings.newsletter.subscription'))
-            <div class="grid gap-2.5">
-                <p
-                    class="max-w-[288px] text-3xl italic leading-[45px] text-white max-md:text-2xl max-sm:text-lg"
-                    role="heading"
-                    aria-level="2"
-                >
-                    @lang('shop::app.components.layouts.footer.newsletter-text')
-                </p>
-
-                <p class="text-xs text-white/85">
-                    @lang('shop::app.components.layouts.footer.subscribe-stay-touch')
-                </p>
-
-                <div>
-                    <x-shop::form
-                        :action="route('shop.subscription.store')"
-                        class="mt-2.5 rounded max-sm:mt-0"
-                    >
-                        <div class="relative w-full">
-                            <x-shop::form.control-group.control
-                                type="email"
-                                class="block w-[420px] max-w-full rounded-xl border-2 border-white/20 bg-white px-5 py-4 text-base text-gray-900 max-1060:w-full max-md:p-3.5 max-sm:mb-0 max-sm:rounded-lg max-sm:border-2 max-sm:p-2 max-sm:text-sm"
-                                name="email"
-                                rules="required|email"
-                                label="Email"
-                                :aria-label="trans('shop::app.components.layouts.footer.email')"
-                                placeholder="email@example.com"
-                            />
-    
-                            <x-shop::form.control-group.error control-name="email" />
-    
-                            <button
-                                type="submit"
-                                class="absolute top-1.5 flex w-max items-center rounded-xl bg-[#0F347D] px-7 py-2.5 font-medium text-white hover:bg-[#0b2961] ltr:right-2 rtl:left-2 max-md:top-1 max-md:px-5 max-md:text-xs max-sm:mt-0 max-sm:rounded-lg max-sm:px-4 max-sm:py-2"
-                            >
-                                @lang('shop::app.components.layouts.footer.subscribe')
-                            </button>
-                        </div>
-                    </x-shop::form>
-                </div>
+            <div class="mt-5 grid gap-4 text-sm text-white/90">
+                <p>Lun - Sam: 8h30 - 20h00</p>
+                <p><a href="mailto:daniel679091819@gmail.com" class="hover:text-white">daniel679091819@gmail.com</a></p>
             </div>
-        @endif
-
-        {!! view_render_event('bagisto.shop.layout.footer.newsletter_subscription.after') !!}
+        </div>
     </div>
 
-    <div class="flex justify-between border-t border-white/20 bg-[#0F347D] px-[60px] py-3.5 max-md:justify-center max-sm:px-5">
-        {!! view_render_event('bagisto.shop.layout.footer.footer_text.before') !!}
+    <div class="border-t border-white/20 px-[60px] py-4 max-md:px-8 max-sm:px-4" style="background:#0F347D; color:#ffffff;">
+        <div class="flex flex-wrap items-center justify-between gap-3 text-sm text-white/90 max-md:flex-col max-md:items-start">
+            <p>Powered by OMD. Tous droit reserver.</p>
 
-        <p class="text-sm text-white max-md:text-center">
-            Powered by OMD. Tous droit reserver.
-        </p>
-
-        {!! view_render_event('bagisto.shop.layout.footer.footer_text.after') !!}
+            <div class="flex flex-wrap items-center gap-3 text-white/90">
+                <span>Selection premium de boissons</span>
+                <span>|</span>
+                <span>Vins &amp; Champagnes</span>
+                <span>|</span>
+                <span>Whiskies &amp; Rhums</span>
+                <span>|</span>
+                <span>Spiritueux &amp; Aperitifs</span>
+            </div>
+        </div>
     </div>
 </footer>
 

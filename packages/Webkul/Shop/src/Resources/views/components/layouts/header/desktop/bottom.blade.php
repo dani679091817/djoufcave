@@ -1,6 +1,6 @@
 {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.before') !!}
 
-<div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 border-white/20 bg-[#123C8D] px-[60px] text-white max-1180:px-8">
+<div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 border-white/20 px-[60px] text-white max-1180:px-8" style="background:#123C8D; color:#ffffff;">
     <!--
         This section will provide categories for the first, second, and third levels. If
         additional levels are required, users can customize them according to their needs.
@@ -16,7 +16,7 @@
         >
             <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/35 bg-white p-1 shadow-sm">
                 <img
-                    src="{{ bagisto_asset('images/logo.svg') }}"
+                    src="{{ asset('logodjouf.webp') }}"
                     alt="Djouf Inter"
                     class="h-full w-full rounded-full object-contain"
                 >
@@ -115,7 +115,7 @@
                     aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.compare')"
                 >
                     <span
-                        class="inline-block cursor-pointer text-2xl text-white"
+                        class="icon-compare inline-block cursor-pointer text-2xl text-white"
                         role="presentation"
                     ></span>
                 </a>
@@ -127,7 +127,9 @@
 
             <!-- Mini cart -->
             @if(core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
-                @include('shop::checkout.cart.mini-cart')
+                <div class="[&_.icon-cart]:text-white [&_.icon-cart-filled]:text-white [&_.mini-cart-icon]:text-white [&_.mini-cart-button]:text-white">
+                    @include('shop::checkout.cart.mini-cart')
+                </div>
             @endif
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.mini_cart.after') !!}
@@ -138,7 +140,7 @@
             <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
                 <x-slot:toggle>
                     <span
-                        class="inline-block cursor-pointer text-2xl text-white"
+                        class="icon-users inline-block cursor-pointer text-2xl text-white"
                         role="button"
                         aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.profile')"
                         tabindex="0"

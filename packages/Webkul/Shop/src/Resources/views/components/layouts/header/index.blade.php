@@ -6,7 +6,7 @@
     </div>
 @endif
 
-<header class="shadow-gray sticky top-0 z-10 bg-[#123C8D] text-white shadow-sm max-lg:shadow-none">
+<header class="shadow-gray sticky top-0 z-10 text-white shadow-sm max-lg:shadow-none" style="background:#123C8D; color:#ffffff;">
     <v-header-switcher>
         <!-- Desktop Header Shimmer -->
         <div class="flex flex-wrap max-lg:hidden">
@@ -81,7 +81,7 @@
         </div>
 
         <!-- Mobile Header Shimmer -->
-        <div class="flex flex-wrap gap-4 bg-[#123C8D] px-4 pb-4 pt-6 text-white shadow-sm lg:hidden">
+        <div class="flex flex-wrap gap-4 px-4 pb-4 pt-6 text-white shadow-sm lg:hidden" style="background:#123C8D; color:#ffffff;">
             <div class="flex w-full items-center justify-between">
                 <!-- Left Navigation -->
                 <div class="flex items-center gap-x-1.5">
