@@ -1,6 +1,6 @@
 {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.before') !!}
 
-<div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 px-[60px] max-1180:px-8">
+<div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 border-white/20 bg-[#123C8D] px-[60px] text-white max-1180:px-8">
     <!--
         This section will provide categories for the first, second, and third levels. If
         additional levels are required, users can customize them according to their needs.
@@ -11,14 +11,20 @@
 
         <a
             href="{{ route('shop.home.index') }}"
-            aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.bagisto')"
+            class="flex items-center gap-3"
+            aria-label="Djouf Inter"
         >
-            <img
-                src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                width="131"
-                height="29"
-                alt="{{ config('app.name') }}"
-            >
+            <span class="flex h-12 w-12 items-center justify-center rounded-full border border-white/35 bg-white p-1 shadow-sm">
+                <img
+                    src="{{ bagisto_asset('images/logo.svg') }}"
+                    alt="Djouf Inter"
+                    class="h-full w-full rounded-full object-contain"
+                >
+            </span>
+
+            <span class="text-lg font-semibold tracking-wide text-white max-[1180px]:hidden">
+                Djouf Inter
+            </span>
         </a>
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.after') !!}
@@ -66,13 +72,13 @@
                     @lang('shop::app.components.layouts.header.desktop.bottom.search')
                 </label>
 
-                <div class="icon-search pointer-events-none absolute top-2.5 flex items-center text-xl ltr:left-3 rtl:right-3"></div>
+                <div class="icon-search pointer-events-none absolute top-2.5 flex items-center text-xl text-[#123C8D] ltr:left-3 rtl:right-3"></div>
 
                 <input
                     type="text"
                     name="query"
                     value="{{ request('query') }}"
-                    class="block w-full py-3 text-xs font-medium text-gray-900 transition-all border border-transparent rounded-lg bg-zinc-100 px-11 hover:border-gray-400 focus:border-gray-400"
+                    class="block w-full rounded-lg border border-white/20 bg-white px-11 py-3 text-xs font-medium text-gray-900 transition-all hover:border-white focus:border-white"
                     minlength="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
                     maxlength="{{ core()->getConfigData('catalog.products.search.max_query_length') }}"
                     placeholder="@lang('shop::app.components.layouts.header.desktop.bottom.search-text')"
@@ -109,7 +115,7 @@
                     aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.compare')"
                 >
                     <span
-                        class="inline-block text-2xl cursor-pointer icon-compare"
+                        class="inline-block cursor-pointer text-2xl text-white"
                         role="presentation"
                     ></span>
                 </a>
@@ -132,7 +138,7 @@
             <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
                 <x-slot:toggle>
                     <span
-                        class="inline-block text-2xl cursor-pointer icon-users"
+                        class="inline-block cursor-pointer text-2xl text-white"
                         role="button"
                         aria-label="@lang('shop::app.components.layouts.header.desktop.bottom.profile')"
                         tabindex="0"

@@ -6,11 +6,11 @@
     </div>
 @endif
 
-<header class="shadow-gray sticky top-0 z-10 bg-white shadow-sm max-lg:shadow-none">
+<header class="shadow-gray sticky top-0 z-10 bg-[#123C8D] text-white shadow-sm max-lg:shadow-none">
     <v-header-switcher>
         <!-- Desktop Header Shimmer -->
         <div class="flex flex-wrap max-lg:hidden">
-            <div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 px-[60px] max-1180:px-8">
+            <div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 border-white/20 px-[60px] max-1180:px-8">
                 <!-- Left Navigation Section -->
                 <div class="flex items-center gap-x-10 max-[1180px]:gap-x-5">
                     <!-- Logo Shimmer -->
@@ -81,7 +81,7 @@
         </div>
 
         <!-- Mobile Header Shimmer -->
-        <div class="flex flex-wrap gap-4 px-4 pb-4 pt-6 shadow-sm lg:hidden">
+        <div class="flex flex-wrap gap-4 bg-[#123C8D] px-4 pb-4 pt-6 text-white shadow-sm lg:hidden">
             <div class="flex w-full items-center justify-between">
                 <!-- Left Navigation -->
                 <div class="flex items-center gap-x-1.5">

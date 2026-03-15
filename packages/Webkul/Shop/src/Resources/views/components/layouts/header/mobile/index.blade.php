@@ -8,7 +8,7 @@
     $showWishlist = (bool) core()->getConfigData('customer.settings.wishlist.wishlist_option');
 @endphp
 
-<div class="flex flex-wrap gap-4 px-4 pt-6 pb-4 shadow-sm lg:hidden">
+<div class="flex flex-wrap gap-4 bg-[#123C8D] px-4 pb-4 pt-6 text-white shadow-sm lg:hidden">
     <div class="flex items-center justify-between w-full">
         <!-- Left Navigation -->
         <div class="flex items-center gap-x-1.5">
@@ -23,15 +23,20 @@
 
             <a
                 href="{{ route('shop.home.index') }}"
-                class="max-h-[30px]"
-                aria-label="@lang('shop::app.components.layouts.header.mobile.bagisto')"
+                class="flex items-center gap-2"
+                aria-label="Djouf Inter"
             >
-                <img
-                    src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                    alt="{{ config('app.name') }}"
-                    width="131"
-                    height="29"
-                >
+                <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-white p-1 shadow-sm">
+                    <img
+                        src="{{ bagisto_asset('images/logo.svg') }}"
+                        alt="Djouf Inter"
+                        class="h-full w-full rounded-full object-contain"
+                    >
+                </span>
+
+                <span class="text-sm font-semibold tracking-wide text-white">
+                    Djouf Inter
+                </span>
             </a>
 
             {!! view_render_event('bagisto.shop.components.layouts.header.mobile.logo.after') !!}
@@ -47,7 +52,7 @@
                         href="{{ route('shop.compare.index') }}"
                         aria-label="@lang('shop::app.components.layouts.header.mobile.compare')"
                     >
-                        <span class="text-2xl cursor-pointer icon-compare"></span>
+                        <span class="text-2xl cursor-pointer icon-compare text-white"></span>
                     </a>
                 @endif
 
@@ -65,7 +70,7 @@
                 <div class="max-md:hidden">
                     <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
                         <x-slot:toggle>
-                            <span class="text-2xl cursor-pointer icon-users"></span>
+                            <span class="text-2xl cursor-pointer icon-users text-white"></span>
                         </x-slot>
 
                         <!-- Guest Dropdown -->
@@ -182,7 +187,7 @@
                             href="{{ route('shop.customer.session.create') }}"
                             aria-label="@lang('shop::app.components.layouts.header.mobile.account')"
                         >
-                            <span class="text-2xl cursor-pointer icon-users"></span>
+                            <span class="text-2xl cursor-pointer icon-users text-white"></span>
                         </a>
                     @endguest
 
@@ -212,11 +217,11 @@
         </label>
 
         <div class="relative w-full">
-            <div class="icon-search pointer-events-none absolute top-3 flex items-center text-2xl max-md:text-xl max-sm:top-2.5 ltr:left-3 rtl:right-3"></div>
+            <div class="icon-search pointer-events-none absolute top-3 flex items-center text-2xl text-[#123C8D] max-md:text-xl max-sm:top-2.5 ltr:left-3 rtl:right-3"></div>
 
             <input
                 type="text"
-                class="block w-full rounded-xl border border-['#E3E3E3'] px-11 py-3.5 text-sm font-medium text-gray-900 max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
+                class="block w-full rounded-xl border border-white/20 bg-white px-11 py-3.5 text-sm font-medium text-gray-900 max-md:rounded-lg max-md:px-10 max-md:py-3 max-md:font-normal max-sm:text-xs"
                 name="query"
                 value="{{ request('query') }}"
                 placeholder="@lang('shop::app.components.layouts.header.mobile.search-text')"
@@ -246,12 +251,19 @@
             <x-slot:header>
                 <div class="flex items-center justify-between">
                     <a href="{{ route('shop.home.index') }}">
-                        <img
-                            src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                            alt="{{ config('app.name') }}"
-                            width="131"
-                            height="29"
-                        >
+                        <span class="flex items-center gap-2">
+                            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-white p-1 shadow-sm">
+                                <img
+                                    src="{{ bagisto_asset('images/logo.svg') }}"
+                                    alt="Djouf Inter"
+                                    class="h-full w-full rounded-full object-contain"
+                                >
+                            </span>
+
+                            <span class="text-sm font-semibold tracking-wide text-[#123C8D]">
+                                Djouf Inter
+                            </span>
+                        </span>
                     </a>
                 </div>
             </x-slot>
