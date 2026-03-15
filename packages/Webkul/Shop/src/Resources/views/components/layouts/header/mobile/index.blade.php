@@ -8,7 +8,7 @@
     $showWishlist = (bool) core()->getConfigData('customer.settings.wishlist.wishlist_option');
 @endphp
 
-<div class="flex flex-wrap gap-4 border-b border-[#F6B21A]/50 px-4 pb-4 pt-6 text-white shadow-sm lg:hidden" style="background:linear-gradient(90deg,#0D2C87 0%,#0A1F61 100%);">
+<div class="flex flex-wrap gap-4 border-b border-[#F6B21A]/50 bg-gradient-to-r from-[#0D2C87] to-[#0A1F61] px-4 pb-4 pt-6 text-white shadow-sm lg:hidden">
     <div class="flex items-center justify-between w-full">
         <!-- Left Navigation -->
         <div class="flex items-center gap-x-1.5">
@@ -23,13 +23,14 @@
 
             <a
                 href="{{ route('shop.home.index') }}"
-                class="inline-flex items-center"
+                class="max-h-[30px]"
                 aria-label="@lang('shop::app.components.layouts.header.mobile.bagisto')"
             >
                 <img
                     src="{{ asset('logodjouf.webp') }}"
                     alt="{{ config('app.name') }}"
-                    class="h-10 w-auto max-w-[130px] object-contain"
+                    width="131"
+                    height="29"
                 >
             </a>
 

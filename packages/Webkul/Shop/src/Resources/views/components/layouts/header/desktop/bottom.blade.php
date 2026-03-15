@@ -1,6 +1,6 @@
 {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.before') !!}
 
-<div class="flex min-h-[78px] w-full justify-between border-b border-[#F6B21A]/50 px-[60px] text-white max-1180:px-8" style="background:linear-gradient(90deg,#0D2C87 0%,#0A1F61 100%);">
+<div class="flex min-h-[78px] w-full justify-between border-b border-[#F6B21A]/50 bg-gradient-to-r from-[#0D2C87] to-[#0A1F61] px-[60px] text-white max-1180:px-8">
     <!--
         This section will provide categories for the first, second, and third levels. If
         additional levels are required, users can customize them according to their needs.
@@ -15,8 +15,9 @@
         >
             <img
                 src="{{ asset('logodjouf.webp') }}"
+                width="131"
+                height="29"
                 alt="{{ config('app.name') }}"
-                class="h-12 w-auto max-w-[150px] object-contain"
             >
         </a>
 
