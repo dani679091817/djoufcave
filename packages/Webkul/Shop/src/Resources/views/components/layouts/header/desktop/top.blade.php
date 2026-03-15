@@ -55,7 +55,7 @@
         type="text/x-template"
         id="v-topbar-template"
     >
-        <div class="flex w-full items-center justify-between border-b border-[#F6B21A]/40 bg-[#081B53] px-16 text-white">
+        <div class="flex w-full items-center justify-between border border-b border-l-0 border-r-0 border-t-0 px-16">
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.top.currency_switcher.before') !!}
 
             <!-- Currency Switcher -->
@@ -63,7 +63,7 @@
                 <!-- Dropdown Toggler -->
                 <x-slot:toggle>
                     <div
-                        class="flex cursor-pointer gap-2.5 py-3 text-white/95 hover:text-[#F6B21A]"
+                        class="flex cursor-pointer gap-2.5 py-3"
                         role="button"
                         tabindex="0"
                         @click="currencyToggler = ! currencyToggler"
@@ -90,14 +90,14 @@
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.top.currency_switcher.after') !!}
 
             <p
-                class="py-3 text-xs font-medium text-white/90"
+                class="py-3 text-xs font-medium"
                 v-pre
             >
                 {{ core()->getConfigData('general.content.header_offer.title') }}
                 
                 <a 
                     href="{{ core()->getConfigData('general.content.header_offer.redirection_link') }}" 
-                    class="underline decoration-[#F6B21A] underline-offset-2"
+                    class="underline"
                     role="button"
                 >
                     {{ core()->getConfigData('general.content.header_offer.redirection_title') }}
@@ -111,7 +111,7 @@
                 <x-slot:toggle>
                     <!-- Dropdown Toggler -->
                     <div
-                        class="flex cursor-pointer items-center gap-2.5 py-3 text-white/95 hover:text-[#F6B21A]"
+                        class="flex cursor-pointer items-center gap-2.5 py-3"
                         role="button"
                         tabindex="0"
                         @click="localeToggler = ! localeToggler"
