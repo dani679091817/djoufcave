@@ -68,6 +68,8 @@
                 'defaultAllowedMaxRange',
                 'defaultMinRange',
                 'defaultMaxRange',
+                'defaultPrecision',
+                'defaultSuffix',
             ],
 
             data() {
@@ -123,19 +125,23 @@
                                 };
 
                             case 'float':
+                                const precision = Number.isInteger(parseInt(this.defaultPrecision, 10))
+                                    ? parseInt(this.defaultPrecision, 10)
+                                    : 2;
+
                                 return {
-                                    formattedAllowedMinRange: parseFloat(this.allowedMinRange).toFixed(2),
-                                    formattedAllowedMaxRange: parseFloat(this.allowedMaxRange).toFixed(2),
-                                    formattedMinRange: parseFloat(this.minRange).toFixed(2),
-                                    formattedMaxRange: parseFloat(this.maxRange).toFixed(2),
+                                    formattedAllowedMinRange: this.formatWithSuffix(parseFloat(this.allowedMinRange).toFixed(precision)),
+                                    formattedAllowedMaxRange: this.formatWithSuffix(parseFloat(this.allowedMaxRange).toFixed(precision)),
+                                    formattedMinRange: this.formatWithSuffix(parseFloat(this.minRange).toFixed(precision)),
+                                    formattedMaxRange: this.formatWithSuffix(parseFloat(this.maxRange).toFixed(precision)),
                                 };
 
                             default:
                                 return {
-                                    formattedAllowedMinRange: this.allowedMinRange,
-                                    formattedAllowedMaxRange: this.allowedMaxRange,
-                                    formattedMinRange: this.minRange,
-                                    formattedMaxRange: this.maxRange,
+                                    formattedAllowedMinRange: this.formatWithSuffix(this.allowedMinRange),
+                                    formattedAllowedMaxRange: this.formatWithSuffix(this.allowedMaxRange),
+                                    formattedMinRange: this.formatWithSuffix(this.minRange),
+                                    formattedMaxRange: this.formatWithSuffix(this.maxRange),
                                 };
                         }
                     }
@@ -149,6 +155,12 @@
                         formattedMinRange: this.minRange,
                         formattedMaxRange: this.maxRange,
                     };
+                },
+
+                formatWithSuffix(value) {
+                    return this.defaultSuffix
+                        ? `${value} ${this.defaultSuffix}`
+                        : value;
                 },
 
                 handle(rangeType) {

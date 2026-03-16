@@ -162,15 +162,25 @@
 
             <!-- Filter Item Content -->
             <x-slot:content class="!p-0">
-                <!-- Price Range Filter -->
-                <ul v-if="filter.type === 'price'">
+                <!-- Numeric Range Filters -->
+                <ul v-if="isRangeFilter">
                     <li>
                         <v-price-filter
+                            v-if="filter.code === 'price'"
                             :key="refreshKey"
                             :default-price-range="appliedValues"
                             @set-price-range="applyValue($event)"
                         >
                         </v-price-filter>
+
+                        <v-attribute-range-filter
+                            v-else
+                            :key="refreshKey"
+                            :filter="filter"
+                            :default-range="appliedValues"
+                            @set-range="applyValue($event)"
+                        >
+                        </v-attribute-range-filter>
                     </li>
                 </ul>
 
@@ -179,7 +189,7 @@
                     <!-- Search Box For Options -->
                     <div
                         class="flex flex-col gap-1"
-                        v-if="filter.type !== 'boolean'"
+                        v-if="filter.type !== 'boolean' && ! isRangeFilter"
                     >
                         <div class="relative">
                             <div class="icon-search pointer-events-none absolute top-3 flex items-center text-2xl max-md:text-xl max-sm:top-2.5 ltr:left-3 rtl:right-3"></div>
@@ -336,6 +346,30 @@
         </div>
     </script>
 
+    <script
+        type="text/x-template"
+        id="v-attribute-range-filter-template"
+    >
+        <div>
+            <template v-if="isLoading">
+                <x-shop::shimmer.range-slider />
+            </template>
+
+            <template v-else>
+                <x-shop::range-slider
+                    ::key="refreshKey"
+                    :default-type="sliderType"
+                    ::default-allowed-max-range="allowedMaxValue"
+                    ::default-min-range="minRange"
+                    ::default-max-range="maxRange"
+                    :default-precision="precision"
+                    :default-suffix="unitLabel"
+                    @change-range="setRange($event)"
+                />
+            </template>
+        </div>
+    </script>
+
     <script type='module'>
         app.component('v-filters', {
             template: '#v-filters-template',
@@ -410,7 +444,7 @@
                      * Clearing child components. Improvisation needed here.
                      */
                     this.$refs.filterItemComponent.forEach((filterItem) => {
-                        if (filterItem.filter.code === 'price') {
+                        if (filterItem.isRangeFilter) {
                             filterItem.$data.appliedValues = null;
                         } else {
                             filterItem.$data.appliedValues = [];
@@ -445,9 +479,15 @@
                 }
             },
 
+            computed: {
+                isRangeFilter() {
+                    return ['price', 'contenance_cl', 'degre_alcool'].includes(this.filter.code);
+                },
+            },
+
             created() {
                 // Initialize values in created hook
-                if (this.filter.code === 'price') {
+                if (this.isRangeFilter) {
                     this.appliedValues = this.$parent.$data.filters.applied[this.filter.code]?.join(',');
                 } else {
                     this.appliedValues = this.$parent.$data.filters.applied[this.filter.code] ?? [];
@@ -455,6 +495,12 @@
             },
 
             mounted() {
+                if (this.isRangeFilter) {
+                    this.isLoadingMore = false;
+
+                    return;
+                }
+
                 this.fetchFilterOptions();
             },
 
@@ -462,7 +508,7 @@
                 appliedValues: {
                     handler(newVal, oldVal) {
                         if (
-                            this.filter.code === 'price' &&
+                            this.isRangeFilter &&
                             newVal !== oldVal &&
                             !newVal
                         ) {
@@ -475,7 +521,7 @@
 
             methods: {
                 applyValue($event) {
-                    if (this.filter.code === 'price') {
+                    if (this.isRangeFilter) {
                         this.appliedValues = $event;
 
                         this.$emit('values-applied', this.appliedValues);
@@ -505,6 +551,12 @@
                 },
 
                 fetchFilterOptions(replace = true) {
+                    if (this.isRangeFilter) {
+                        this.isLoadingMore = false;
+
+                        return;
+                    }
+
                     this.isLoadingMore = true;
 
                     const url = `{{ route("shop.api.categories.attribute_options", 'attribute_id') }}`.replace('attribute_id', this.filter.id);
@@ -527,6 +579,103 @@
                     .catch(error => {
                         this.isLoadingMore = false;
                     });
+                },
+            },
+        });
+
+        app.component('v-attribute-range-filter', {
+            template: '#v-attribute-range-filter-template',
+
+            props: ['filter', 'defaultRange'],
+
+            data() {
+                return {
+                    refreshKey: 0,
+                    isLoading: true,
+                    allowedMaxValue: 100,
+                    range: null,
+                };
+            },
+
+            computed: {
+                minRange() {
+                    const [minRange] = this.normalizeRange(this.range);
+
+                    return minRange;
+                },
+
+                maxRange() {
+                    const [, maxRange] = this.normalizeRange(this.range);
+
+                    return maxRange;
+                },
+
+                sliderType() {
+                    return this.filter.code === 'degre_alcool' ? 'float' : 'integer';
+                },
+
+                precision() {
+                    return this.filter.code === 'degre_alcool' ? 2 : 0;
+                },
+
+                unitLabel() {
+                    return this.filter.code === 'degre_alcool' ? '%' : 'cl';
+                },
+            },
+
+            created() {
+                this.range = this.normalizeRange(this.defaultRange).join(',');
+            },
+
+            mounted() {
+                this.getMaxValue();
+            },
+
+            methods: {
+                normalizeRange(range) {
+                    if (typeof range === 'string') {
+                        const values = range.split(',').map(value => value?.toString().trim()).filter(Boolean);
+
+                        return [values[0] ?? '0', values[1] ?? '100'];
+                    }
+
+                    if (Array.isArray(range)) {
+                        return [
+                            (range[0] ?? 0).toString(),
+                            (range[1] ?? 100).toString(),
+                        ];
+                    }
+
+                    return ['0', '100'];
+                },
+
+                getMaxValue() {
+                    const url = `{{ route("shop.api.categories.attribute_max_value", ['attribute_id' => 'attribute_id', 'id' => isset($category) ? $category->id : '']) }}`.replace('attribute_id', this.filter.id);
+
+                    this.$axios.get(url)
+                        .then((response) => {
+                            this.isLoading = false;
+
+                            if (response.data.data.max_value) {
+                                this.allowedMaxValue = response.data.data.max_value;
+                            }
+
+                            if (! this.defaultRange) {
+                                this.range = [0, this.allowedMaxValue].join(',');
+                            }
+
+                            ++this.refreshKey;
+                        })
+                        .catch((error) => {
+                            this.isLoading = false;
+                            console.log(error);
+                        });
+                },
+
+                setRange($event) {
+                    this.range = [$event.minRange, $event.maxRange].join(',');
+
+                    this.$emit('set-range', this.range);
                 },
             },
         });

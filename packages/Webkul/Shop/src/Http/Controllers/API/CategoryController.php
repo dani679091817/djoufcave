@@ -4,6 +4,7 @@ namespace Webkul\Shop\Http\Controllers\API;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 use Webkul\Attribute\Enums\AttributeTypeEnum;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Category\Repositories\CategoryRepository;
@@ -120,6 +121,34 @@ class CategoryController extends APIController
 
         return new JsonResource([
             'max_price' => core()->convertPrice($maxPrice),
+        ]);
+    }
+
+    /**
+     * Get maximum value for a numeric attribute within an optional category.
+     */
+    public function getAttributeMaxValue(int $attributeId, $categoryId = null): JsonResource
+    {
+        $attribute = $this->attributeRepository->findOrFail($attributeId);
+
+        $column = $attribute->column_name;
+
+        $query = DB::table('product_attribute_values')
+            ->join('products', 'products.id', '=', 'product_attribute_values.product_id')
+            ->join('product_channels', 'products.id', '=', 'product_channels.product_id')
+            ->where('product_attribute_values.attribute_id', $attribute->id)
+            ->where('product_channels.channel_id', core()->getCurrentChannel()->id)
+            ->whereNotNull('product_attribute_values.'.$column);
+
+        if ($categoryId) {
+            $query->join('product_categories', 'products.id', '=', 'product_categories.product_id')
+                ->where('product_categories.category_id', $categoryId);
+        }
+
+        $maxValue = (float) ($query->max('product_attribute_values.'.$column) ?? 0);
+
+        return new JsonResource([
+            'max_value' => $maxValue,
         ]);
     }
 }

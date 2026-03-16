@@ -88,6 +88,29 @@ class ProductRepository extends BaseProductRepository
                 ]);
             }
 
+            foreach (['contenance_cl', 'degre_alcool'] as $rangeAttributeCode) {
+                if (empty($params[$rangeAttributeCode])) {
+                    continue;
+                }
+
+                $rangeAttribute = $this->attributeRepository->findOneByField('code', $rangeAttributeCode);
+
+                if (! $rangeAttribute) {
+                    continue;
+                }
+
+                $rangeAlias = $rangeAttributeCode.'_range_product_attribute_values';
+                $rangeValues = array_map('floatval', explode(',', $params[$rangeAttributeCode]));
+
+                $rangeMin = (float) ($rangeValues[0] ?? 0);
+                $rangeMax = (float) ($rangeValues[1] ?? $rangeMin);
+
+                $qb->leftJoin('product_attribute_values as '.$rangeAlias, function ($join) use ($rangeAlias, $rangeAttribute) {
+                    $join->on('products.id', '=', $rangeAlias.'.product_id')
+                        ->where($rangeAlias.'.attribute_id', $rangeAttribute->id);
+                })->whereBetween($rangeAlias.'.'.$rangeAttribute->column_name, [$rangeMin, $rangeMax]);
+            }
+
             $filterableAttributes = $this->attributeRepository->getProductDefaultAttributes(array_keys($params));
 
             $attributes = $filterableAttributes->whereIn('code', [
@@ -131,6 +154,8 @@ class ProductRepository extends BaseProductRepository
 
             $attributes = $filterableAttributes->whereNotIn('code', [
                 'price',
+                'contenance_cl',
+                'degre_alcool',
                 'name',
                 'status',
                 'visible_individually',
