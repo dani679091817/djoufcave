@@ -1,7 +1,7 @@
 {!! view_render_event('bagisto.shop.layout.footer.before') !!}
 
 <footer class="mt-9 text-white max-sm:mt-10" style="background:#123C8D; color:#ffffff;">
-    <div class="mx-auto grid max-w-[1520px] gap-10 px-[60px] py-12 lg:grid-cols-[1.2fr_1fr_1fr_1fr] max-md:px-8 max-sm:px-4">
+    <div class="mx-auto grid max-w-[1520px] gap-10 px-[60px] py-12 md:grid-cols-2 xl:grid-cols-[1.35fr_1fr_1fr_1fr] max-md:px-8 max-sm:px-4">
         <div class="max-w-[340px]">
             <a href="{{ route('shop.home.index') }}" class="flex items-center gap-3">
                 <span class="flex h-16 w-16 items-center justify-center rounded-full border border-white/35 bg-white p-1.5 shadow-sm">
@@ -18,9 +18,16 @@
             <p class="mt-5 text-sm leading-7 text-white/90">
                 Votre boutique premium de boissons: whiskies, vins, champagnes, aperitifs et spiritueux. Qualite, authenticite et livraison rapide.
             </p>
+
+            <div class="mt-6 flex flex-wrap gap-3 text-sm text-white/85">
+                <span class="rounded-full border border-white/20 px-3 py-1">Whiskies</span>
+                <span class="rounded-full border border-white/20 px-3 py-1">Vins</span>
+                <span class="rounded-full border border-white/20 px-3 py-1">Champagnes</span>
+                <span class="rounded-full border border-white/20 px-3 py-1">Rhums</span>
+            </div>
         </div>
 
-        <div>
+        <div class="md:justify-self-start xl:justify-self-center">
             <h4 class="text-base font-semibold uppercase tracking-[0.2em] text-white">Navigation</h4>
 
             <ul class="mt-5 grid gap-3 text-sm text-white/90">
@@ -32,7 +39,7 @@
             </ul>
         </div>
 
-        <div>
+        <div class="md:justify-self-start xl:justify-self-center">
             <h4 class="text-base font-semibold uppercase tracking-[0.2em] text-white">Rayons boissons</h4>
 
             <ul class="mt-5 grid gap-3 text-sm text-white/90">
@@ -44,12 +51,21 @@
             </ul>
         </div>
 
-        <div id="contact">
+        <div id="contact" class="md:justify-self-start xl:justify-self-end xl:min-w-[260px]">
             <h4 class="text-base font-semibold uppercase tracking-[0.2em] text-white">Contact</h4>
 
             <div class="mt-5 grid gap-4 text-sm text-white/90">
-                <p>Lun - Sam: 8h30 - 20h00</p>
-                <p><a href="mailto:daniel679091819@gmail.com" class="hover:text-white">daniel679091819@gmail.com</a></p>
+                <div class="rounded-2xl border border-white/15 bg-white/5 px-4 py-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-white/70">Horaires</p>
+                    <p class="mt-2 leading-6">Lundi a dimanche<br>7h a 23h</p>
+                </div>
+
+                <div class="rounded-2xl border border-white/15 bg-white/5 px-4 py-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-white/70">Contact</p>
+                    <p class="mt-2 break-all">
+                        <a href="https://djoufinter.com" class="hover:text-white">djoufinter.com</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

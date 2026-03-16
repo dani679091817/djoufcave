@@ -253,19 +253,12 @@
             <x-slot:header>
                 <div class="flex items-center justify-between">
                     <a href="{{ route('shop.home.index') }}">
-                        <span class="flex items-center gap-2">
-                            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-white p-1 shadow-sm">
-                                <img
-                                    src="{{ asset('logodjouf.webp') }}"
-                                    alt="Djouf Inter"
-                                    class="h-full w-full rounded-full object-contain"
-                                >
-                            </span>
-
-                            <span class="text-sm font-semibold tracking-wide text-[#123C8D]">
-                                Djouf Inter
-                            </span>
-                        </span>
+                        <img
+                            src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
+                            alt="{{ config('app.name') }}"
+                            width="131"
+                            height="29"
+                        >
                     </a>
                 </div>
             </x-slot>
