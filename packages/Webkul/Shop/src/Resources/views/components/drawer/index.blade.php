@@ -101,7 +101,7 @@
                     :style="'width:' + width"
                     v-show="isOpen"
                 >
-                    <div class="pointer-events-auto h-full w-full overflow-auto bg-white">
+                    <div class="pointer-events-auto h-full w-full overflow-auto bg-white text-gray-900">
                         <div class="flex h-full w-full flex-col">
                             <div class="min-h-0 min-w-0 flex-1 overflow-auto">
                                 <div class="flex h-full flex-col">
