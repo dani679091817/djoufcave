@@ -136,6 +136,24 @@
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile.before') !!}
 
+            @guest('customer')
+                <div class="hidden items-center gap-3 max-[1250px]:hidden xl:flex">
+                    <a
+                        href="{{ route('shop.customer.session.create') }}"
+                        class="rounded-lg border border-white/35 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-white hover:text-[#123C8D]"
+                    >
+                        @lang('shop::app.components.layouts.header.desktop.bottom.sign-in')
+                    </a>
+
+                    <a
+                        href="{{ route('shop.customers.register.index') }}"
+                        class="rounded-lg bg-white px-3 py-1.5 text-sm font-semibold text-[#123C8D] transition hover:bg-slate-100"
+                    >
+                        @lang('shop::app.components.layouts.header.desktop.bottom.sign-up')
+                    </a>
+                </div>
+            @endguest
+
             <!-- user profile -->
             <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
                 <x-slot:toggle>
@@ -542,30 +560,19 @@
 
             methods: {
                 initCategories() {
-                    try {
-                        const stored = localStorage.getItem('categories');
-
-                        if (stored) {
-                            this.categories = JSON.parse(stored);
-                            this.isLoading = false;
-
-                            return;
-                        }
-
-                    } catch (e) {}
-
                     this.getCategories();
                 },
 
                 getCategories() {
                     this.$axios.get("{{ route('shop.api.categories.tree') }}")
                         .then(response => {
-                            this.isLoading = false;
                             this.categories = response.data.data;
-                            localStorage.setItem('categories', JSON.stringify(this.categories));
                         })
                         .catch(error => {
                             console.log(error);
+                        })
+                        .finally(() => {
+                            this.isLoading = false;
                         });
                 },
 

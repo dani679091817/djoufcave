@@ -87,15 +87,35 @@ class Controller extends ImageCacheController
                     $image->make($path);
                 }
             }, $cacheTime);
-        } catch (\Exception $e) {
-            if ($template != 'logo') {
-                abort(404);
+        } catch (\Throwable $e) {
+            if ($template == 'logo') {
+                $content = '';
+            } else {
+                $content = $this->renderWithoutCache($manager, $template, $path);
             }
-
-            $content = '';
         }
 
         return $this->buildResponse($content);
+    }
+
+    /**
+     * Render image without using cache storage.
+     */
+    protected function renderWithoutCache(ImageManager $manager, $template, string $path): string
+    {
+        try {
+            $image = $manager->make($path);
+
+            if ($template instanceof Closure) {
+                $template($image);
+            } elseif (is_object($template)) {
+                $image->filter($template);
+            }
+
+            return (string) $image->encode();
+        } catch (\Throwable $e) {
+            abort(404);
+        }
     }
 
     /**
