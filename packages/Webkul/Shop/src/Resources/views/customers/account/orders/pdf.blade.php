@@ -248,8 +248,8 @@
                 ["\u{202F}", "\u{00A0}", "\xc2\xa0", "\xe2\x80\xaf"],
                 ' ',
                 $currency
-                    ? $pdfPrice($amount, $currency)
-                    : $pdfPrice($amount)
+                    ? core()->formatPrice($amount, $currency)
+                    : core()->formatPrice($amount)
             );
         @endphp
         <div class="logo-container {{ core()->getCurrentLocale()->direction }}">
