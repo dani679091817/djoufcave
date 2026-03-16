@@ -35,6 +35,7 @@ class ProductRepository extends BaseProductRepository
             'attribute_family',
             'images',
             'videos',
+            'categories',
             'attribute_values',
             'price_indices',
             'inventory_indices',

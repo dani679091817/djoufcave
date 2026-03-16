@@ -56,6 +56,16 @@ class ProductResource extends JsonResource
             'reviews' => [
                 'total' => $this->reviewHelper->getTotalReviews($this),
             ],
+            'sub_categories' => $this->categories
+                ->filter(fn ($category) => ! is_null($category->parent_id))
+                ->unique('id')
+                ->values()
+                ->map(fn ($category) => [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'url' => $category->url,
+                    'logo_url' => $category->logo_url,
+                ]),
         ];
     }
 }

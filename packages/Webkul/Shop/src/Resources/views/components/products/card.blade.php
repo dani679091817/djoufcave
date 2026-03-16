@@ -128,6 +128,35 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.after') !!}
 
+                <div
+                    class="flex flex-wrap items-center gap-2"
+                    v-if="getSubCategories().length"
+                >
+                    <a
+                        v-for="category in getSubCategories()"
+                        :key="`grid-category-${product.id}-${category.id}`"
+                        :href="category.url"
+                        class="inline-flex items-center gap-1.5 rounded-full bg-[#F3F7FF] px-2 py-1 text-xs font-medium text-[#123C8D] transition hover:bg-[#E6EEFF]"
+                    >
+                        <span class="flex h-5 w-5 items-center justify-center overflow-hidden rounded-full bg-[#123C8D]/10 text-[10px] font-semibold uppercase text-[#123C8D]">
+                            <img
+                                v-if="category.logo_url"
+                                :src="category.logo_url"
+                                :alt="category.name"
+                                class="h-full w-full object-cover"
+                            >
+
+                            <template v-else>
+                                @{{ getCategoryInitials(category.name) }}
+                            </template>
+                        </span>
+
+                        <span class="leading-none">
+                            @{{ category.name }}
+                        </span>
+                    </a>
+                </div>
+
                 <!-- Pricing -->
                 {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
@@ -273,6 +302,35 @@
 
                 {!! view_render_event('bagisto.shop.components.products.card.name.after') !!}
 
+                <div
+                    class="flex flex-wrap items-center gap-2"
+                    v-if="getSubCategories().length"
+                >
+                    <a
+                        v-for="category in getSubCategories()"
+                        :key="`list-category-${product.id}-${category.id}`"
+                        :href="category.url"
+                        class="inline-flex items-center gap-1.5 rounded-full bg-[#F3F7FF] px-2 py-1 text-xs font-medium text-[#123C8D] transition hover:bg-[#E6EEFF]"
+                    >
+                        <span class="flex h-5 w-5 items-center justify-center overflow-hidden rounded-full bg-[#123C8D]/10 text-[10px] font-semibold uppercase text-[#123C8D]">
+                            <img
+                                v-if="category.logo_url"
+                                :src="category.logo_url"
+                                :alt="category.name"
+                                class="h-full w-full object-cover"
+                            >
+
+                            <template v-else>
+                                @{{ getCategoryInitials(category.name) }}
+                            </template>
+                        </span>
+
+                        <span class="leading-none">
+                            @{{ category.name }}
+                        </span>
+                    </a>
+                </div>
+
                 {!! view_render_event('bagisto.shop.components.products.card.price.before') !!}
 
                 <div
@@ -354,6 +412,24 @@
             },
 
             methods: {
+                getSubCategories() {
+                    if (! Array.isArray(this.product.sub_categories)) {
+                        return [];
+                    }
+
+                    return this.product.sub_categories.slice(0, 3);
+                },
+
+                getCategoryInitials(name) {
+                    const parts = String(name || '')
+                        .trim()
+                        .split(/\s+/)
+                        .filter(Boolean)
+                        .slice(0, 2);
+
+                    return (parts.map(part => part.charAt(0)).join('') || 'SC').toUpperCase();
+                },
+
                 addToWishlist() {
                     if (this.isCustomer) {
                         this.$axios.post(`{{ route('shop.api.customers.account.wishlist.store') }}`, {

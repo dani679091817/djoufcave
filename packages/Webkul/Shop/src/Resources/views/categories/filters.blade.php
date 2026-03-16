@@ -358,12 +358,12 @@
             <template v-else>
                 <x-shop::range-slider
                     ::key="refreshKey"
-                    :default-type="sliderType"
+                    ::default-type="sliderType"
                     ::default-allowed-max-range="allowedMaxValue"
                     ::default-min-range="minRange"
                     ::default-max-range="maxRange"
-                    :default-precision="precision"
-                    :default-suffix="unitLabel"
+                    ::default-precision="precision"
+                    ::default-suffix="unitLabel"
                     @change-range="setRange($event)"
                 />
             </template>

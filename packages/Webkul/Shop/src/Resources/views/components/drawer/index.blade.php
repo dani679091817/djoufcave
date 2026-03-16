@@ -23,7 +23,9 @@
 
                 <div class="absolute top-5 max-sm:top-4 ltr:right-5 rtl:left-5">
                     <span
-                        class="icon-cancel cursor-pointer text-3xl text-zinc-800 max-md:text-2xl"
+                        class="icon-cancel z-10 cursor-pointer text-3xl !text-black max-md:text-2xl"
+                        style="color: #000;"
+                        aria-label="Close drawer"
                         @click="close"
                     >
                     </span>
