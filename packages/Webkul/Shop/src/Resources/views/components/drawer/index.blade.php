@@ -23,7 +23,7 @@
 
                 <div class="absolute top-5 max-sm:top-4 ltr:right-5 rtl:left-5">
                     <span
-                        class="icon-cancel cursor-pointer text-3xl max-md:text-2xl"
+                        class="icon-cancel cursor-pointer text-3xl text-zinc-800 max-md:text-2xl"
                         @click="close"
                     >
                     </span>

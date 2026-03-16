@@ -1,5 +1,11 @@
 {!! view_render_event('bagisto.shop.layout.footer.before') !!}
 
+@if (request()->routeIs('shop.customer.session.create', 'shop.customers.register.index'))
+    {!! view_render_event('bagisto.shop.layout.footer.after') !!}
+
+    @php(return)
+@endif
+
 <footer class="mt-9 text-white max-sm:mt-10" style="background:#123C8D; color:#ffffff;">
     <div class="mx-auto grid max-w-[1520px] gap-10 px-[60px] py-12 md:grid-cols-2 xl:grid-cols-[1.35fr_1fr_1fr_1fr] max-md:px-8 max-sm:px-4">
         <div class="max-w-[340px]">

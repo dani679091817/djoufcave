@@ -253,12 +253,19 @@
             <x-slot:header>
                 <div class="flex items-center justify-between">
                     <a href="{{ route('shop.home.index') }}">
-                        <img
-                            src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                            alt="{{ config('app.name') }}"
-                            width="131"
-                            height="29"
-                        >
+                        <span class="flex items-center gap-2">
+                            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-[#123C8D]/15 bg-white p-1 shadow-sm">
+                                <img
+                                    src="{{ asset('logodjouf.webp') }}"
+                                    alt="Djouf Inter"
+                                    class="h-full w-full rounded-full object-contain"
+                                >
+                            </span>
+
+                            <span class="text-sm font-semibold tracking-wide text-[#123C8D]">
+                                Djouf Inter
+                            </span>
+                        </span>
                     </a>
                 </div>
             </x-slot>
@@ -275,14 +282,21 @@
                         </div>
 
                         @guest('customer')
-                            <a
-                                href="{{ route('shop.customer.session.create') }}"
-                                class="flex text-base font-medium"
-                            >
-                                @lang('shop::app.components.layouts.header.mobile.login')
+                            <div class="grid gap-3">
+                                <a
+                                    href="{{ route('shop.customer.session.create') }}"
+                                    class="inline-flex items-center justify-center rounded-xl bg-[#123C8D] px-4 py-2.5 text-sm font-semibold text-white"
+                                >
+                                    @lang('shop::app.components.layouts.header.mobile.sign-in')
+                                </a>
 
-                                <i class="icon-double-arrow text-2xl ltr:ml-2.5 rtl:mr-2.5"></i>
-                            </a>
+                                <a
+                                    href="{{ route('shop.customers.register.index') }}"
+                                    class="inline-flex items-center justify-center rounded-xl border border-[#123C8D] px-4 py-2.5 text-sm font-semibold text-[#123C8D]"
+                                >
+                                    @lang('shop::app.components.layouts.header.mobile.sign-up')
+                                </a>
+                            </div>
                         @endguest
 
                         @auth('customer')
@@ -439,13 +453,13 @@
                                         class="flex items-center justify-between py-2 transition-colors duration-200 cursor-pointer"
                                         @click="showThirdLevel(secondLevelCategory, category, $event)"
                                     >
-                                        <a :href="secondLevelCategory.url" class="text-sm font-normal">
+                                        <a :href="secondLevelCategory.url" class="text-sm font-normal text-zinc-700">
                                             @{{ secondLevelCategory.name }}
                                         </a>
 
                                         <span
                                             v-if="secondLevelCategory.children && secondLevelCategory.children.length"
-                                            class="icon-arrow-right rtl:icon-arrow-left"
+                                            class="icon-arrow-right text-zinc-700 rtl:icon-arrow-left"
                                         ></span>
                                     </div>
                                 </div>
@@ -481,7 +495,7 @@
                         >
                             <a
                                 :href="thirdLevelCategory.url"
-                                class="block py-2 text-sm transition-colors duration-200"
+                                class="block py-2 text-sm text-zinc-700 transition-colors duration-200"
                             >
                                 @{{ thirdLevelCategory.name }}
                             </a>
