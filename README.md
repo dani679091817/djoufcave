@@ -63,6 +63,3 @@ php artisan view:clear
 - Marque visible: Djouf Inter
 - Branding principal: logo Djouf Inter
 
-## Licence
-
-Ce projet est base sur Bagisto (ecosysteme Laravel). Verifier les licences des dependances avant redistribution commerciale.
