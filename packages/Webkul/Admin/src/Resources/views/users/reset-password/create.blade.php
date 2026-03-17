@@ -4,18 +4,18 @@
         @lang('admin::app.users.reset-password.title')
     </x-slot>
 
-    <div class="flex h-[100vh] items-center justify-center">
+    <div class="flex h-[100vh] items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
         <div class="flex flex-col items-center gap-5">
             <!-- Logo -->
             @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
                 <img
-                    class="h-10 w-[110px]"
+                    class="h-16 w-[140px] object-contain"
                     src="{{ Storage::url($logo) }}"
                     alt="{{ config('app.name') }}"
                 />
             @else
                 <img
-                    class="w-max" 
+                    class="h-16 w-auto" 
                     src="{{ bagisto_asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
                 />
@@ -117,10 +117,7 @@
 
             <!-- Powered By -->
             <div class="text-sm font-normal">
-                @lang('admin::app.users.reset-password.powered-by-description', [
-                    'bagisto' => '<a class="text-blue-600 hover:underline" href="https://bagisto.com/en/">Bagisto</a>',
-                    'webkul' => '<a class="text-blue-600 hover:underline" href="https://webkul.com/">Webkul</a>',
-                ])
+                @lang('admin::app.users.reset-password.powered-by-description')
             </div>
         </div>
     </div>

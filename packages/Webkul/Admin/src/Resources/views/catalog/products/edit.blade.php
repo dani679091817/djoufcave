@@ -150,6 +150,9 @@
             @endphp
 
             @foreach ($groupedColumns as $column => $groups)
+                @php
+                    $hasInventoryGroup = $groups->contains(fn ($group) => $group->code === 'inventories');
+                @endphp
 
                 {!! view_render_event("bagisto.admin.catalog.product.edit.form.column_{$column}.before", ['product' => $product]) !!}
 
@@ -225,6 +228,14 @@
                                 @includeWhen($group->code == 'price', 'admin::catalog.products.edit.price.group')
 
                                 @includeWhen($group->code === 'inventories', 'admin::catalog.products.edit.inventories')
+
+                                @if (
+                                    $group->code !== 'inventories'
+                                    && ! $hasInventoryGroup
+                                    && $customAttributes->contains('code', 'manage_stock')
+                                )
+                                    @include('admin::catalog.products.edit.inventories')
+                                @endif
                             </div>
 
                             {!! view_render_event("bagisto.admin.catalog.product.edit.form.{$group->code}.after", ['product' => $product]) !!}

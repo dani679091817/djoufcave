@@ -73,7 +73,16 @@
 
     <div class="border-t border-white/20 px-[60px] py-4 max-md:px-8 max-sm:px-4" style="background:#0F347D; color:#ffffff;">
         <div class="flex flex-wrap items-center justify-between gap-3 text-sm text-white/90 max-md:flex-col max-md:items-start">
-            <p>Powered by OMD. Tous droit reserver.</p>
+            <p>
+                <a
+                    href="https://www.linkedin.com/in/daniel-otomo-a25239287"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-medium text-white hover:underline"
+                >
+                    Powered by OMD
+                </a>
+            </p>
 
             <div class="flex flex-wrap items-center gap-3 text-white/90">
                 <span>Selection premium de boissons</span>

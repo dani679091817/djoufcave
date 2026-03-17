@@ -130,10 +130,14 @@
                 <!-- Powered By -->
                 <div class="mt-auto">
                     <div class="border-t bg-white py-2 text-center text-xs sm:text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-white">
-                        @lang('admin::app.components.layouts.powered-by.description', [
-                            'bagisto' => '<a class="text-blue-600 hover:underline dark:text-darkBlue" href="https://bagisto.com/en/">Bagisto</a>',
-                            'webkul' => '<a class="text-blue-600 hover:underline dark:text-darkBlue" href="https://webkul.com/">Webkul</a>',
-                        ])
+                        <a
+                            class="text-blue-600 hover:underline dark:text-darkBlue"
+                            href="https://www.linkedin.com/in/daniel-otomo-a25239287"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Powered by OMD
+                        </a>
                     </div>
                 </div>
             </div>

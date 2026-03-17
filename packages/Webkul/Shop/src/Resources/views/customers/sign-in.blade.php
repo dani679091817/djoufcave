@@ -168,7 +168,14 @@
         </div>
 
         <p class="mb-4 mt-8 text-center text-xs text-zinc-500">
-            @lang('shop::app.customers.login-form.footer', ['current_year'=> date('Y') ])
+            <a
+                href="https://www.linkedin.com/in/daniel-otomo-a25239287"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-medium text-navyBlue hover:underline"
+            >
+                Powered by OMD
+            </a>
         </p>
     </div>
 

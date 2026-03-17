@@ -1,6 +1,16 @@
 {!! view_render_event('bagisto.admin.catalog.product.edit.form.inventories.controls.before', ['product' => $product]) !!}
 
-<v-inventories>
+<div
+    id="stock-inventories-panel"
+    class="{{ $product->manage_stock ? '' : 'hidden' }}"
+>
+    @php
+        $inventorySources = app(\Webkul\Inventory\Repositories\InventorySourceRepository::class)->findWhere(['status' => 1]);
+        $hasSingleInventorySource = $inventorySources->count() === 1;
+        $singleInventorySource = $hasSingleInventorySource ? $inventorySources->first() : null;
+        $totalInventoryQty = $product->inventories->sum('qty');
+    @endphp
+
     <!-- Panel Content -->
     <div class="mb-5 text-sm text-gray-600 dark:text-gray-300">
         <div class="relative mb-2.5 flex items-center">
@@ -16,9 +26,35 @@
                 @lang('admin::app.catalog.products.edit.inventories.pending-ordered-qty-info')
             </div>
         </div>
+
+        <p class="rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-200">
+            Renseignez ici la quantite disponible de votre produit.
+        </p>
     </div>
 
-    @foreach (app(\Webkul\Inventory\Repositories\InventorySourceRepository::class)->findWhere(['status' => 1]) as $inventorySource)
+    @if ($inventorySources->isEmpty())
+        <div class="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
+            Aucun depot actif n'est configure. Activez au moins une source d'inventaire pour saisir la quantite produit.
+        </div>
+    @endif
+
+    @if ($hasSingleInventorySource)
+        <div class="mb-4 rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-800 dark:bg-gray-950">
+            <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                Depot utilise
+            </p>
+
+            <p class="mt-1 text-sm font-medium text-gray-700 dark:text-gray-200">
+                {{ $singleInventorySource->name }}
+            </p>
+
+            <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                Quantite totale actuelle: {{ $totalInventoryQty }}
+            </p>
+        </div>
+    @endif
+
+    @foreach ($inventorySources as $inventorySource)
         @php
             $qty = old('inventories[' . $inventorySource->id . ']')
                 ?: ($product->inventories->where('inventory_source_id', $inventorySource->id)->pluck('qty')->first() ?? 0);
@@ -26,51 +62,55 @@
 
         <x-admin::form.control-group>
             <x-admin::form.control-group.label v-pre>
-                {{ $inventorySource->name }}
+                {{ $hasSingleInventorySource ? 'Quantite disponible' : $inventorySource->name }}
             </x-admin::form.control-group.label>
 
+            @if ($hasSingleInventorySource)
+                <p class="mb-2 text-xs text-gray-500 dark:text-gray-400">
+                    Saisie du stock pour {{ $inventorySource->name }}.
+                </p>
+            @endif
+
             <x-admin::form.control-group.control
-                type="text"
+                type="number"
                 :name="'inventories[' . $inventorySource->id . ']'"
                 :rules="'numeric|min:0'"
                 :value="$qty"
-                :label="$inventorySource->name"
+                :label="$hasSingleInventorySource ? 'Quantite disponible' : $inventorySource->name"
+                min="0"
+                step="1"
             />
 
             <x-admin::form.control-group.error :control-name="'inventories[' . $inventorySource->id . ']'" />
         </x-admin::form.control-group>
     @endforeach
-</v-inventories>
+</div>
 
 {!! view_render_event('bagisto.admin.catalog.product.edit.form.inventories.controls.after', ['product' => $product]) !!}
 
 @pushOnce('scripts')
-    <script
-        type="text/x-template"
-        id="v-inventories-template"
-    >
-        <div v-show="manageStock">
-            <slot></slot>
-        </div>
-    </script>
-
     <script type="module">
-        app.component('v-inventories', {
-            template: '#v-inventories-template',
+        const initializeStockInventoriesPanel = () => {
+            const manageStockElement = document.getElementById('manage_stock');
+            const stockInventoriesPanel = document.getElementById('stock-inventories-panel');
 
-            data() {
-                return {
-                    manageStock: "{{ (boolean) $product->manage_stock }}",
-                }
-            },
-
-            mounted: function() {
-                let self = this;
-
-                document.getElementById('manage_stock').addEventListener('change', function(e) {
-                    self.manageStock = e.target.checked;
-                });
+            if (! manageStockElement || ! stockInventoriesPanel) {
+                return;
             }
-        });
+
+            const togglePanel = () => {
+                stockInventoriesPanel.classList.toggle('hidden', ! manageStockElement.checked);
+            };
+
+            togglePanel();
+
+            manageStockElement.addEventListener('change', togglePanel);
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeStockInventoriesPanel, { once: true });
+        } else {
+            initializeStockInventoriesPanel();
+        }
     </script>
 @endpushOnce
