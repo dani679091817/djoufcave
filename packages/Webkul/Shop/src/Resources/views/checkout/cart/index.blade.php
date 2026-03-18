@@ -48,7 +48,7 @@
     {!! view_render_event('bagisto.shop.checkout.cart.header.after') !!}
 
     <div class="flex-auto">
-        <div class="container px-[60px] max-lg:px-8 max-md:px-4">
+        <div class="container px-[60px] max-lg:px-8 max-md:px-4 rounded-lg shadow-gold py-5">
 
             {!! view_render_event('bagisto.shop.checkout.cart.breadcrumbs.before') !!}
 

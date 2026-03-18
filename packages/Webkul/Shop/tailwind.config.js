@@ -34,6 +34,12 @@ module.exports = {
                 darkGreen: '#40994A',
                 darkBlue: '#0044F2',
                 darkPink: '#F85156',
+
+                        boxShadow: {
+                            'gold': '0px 8px 16px rgba(212, 175, 55, 0.25)',
+                            'gold-sm': '0px 4px 8px rgba(212, 175, 55, 0.15)',
+                            'gold-lg': '0px 12px 24px rgba(212, 175, 55, 0.35)',
+                        },
             },
 
             fontFamily: {

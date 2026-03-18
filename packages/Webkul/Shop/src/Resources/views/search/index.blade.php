@@ -81,7 +81,7 @@
             type="text/x-template"
             id="v-search-template"
         >
-            <div class="container px-[60px] max-lg:px-8 max-sm:px-4">
+            <div class="container px-[60px] max-lg:px-8 max-sm:px-4 rounded-lg shadow-gold p-5">
                 <div class="flex items-start gap-10 max-lg:gap-5 md:mt-10">
                     <!-- Product Listing Filters -->
                     @include('shop::categories.filters')
